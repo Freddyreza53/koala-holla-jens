@@ -19,7 +19,7 @@ function setupClickListeners() {
       name: 'testName',
       age: 'testName',
       gender: 'testName',
-      readyForTransfer: 'testName',
+      ready_to_transfer: 'testName',
       notes: 'testName',
     };
     // call saveKoala with the new obejct
@@ -27,14 +27,28 @@ function setupClickListeners() {
   }); 
 }
 
-function getKoalas(){
+function getKoalas() {
   console.log( 'in getKoalas' );
   // ajax call to server to get koalas
-  
+  $.ajax({
+    method: 'GET',
+    url: '/koalas'
+  }).then(function (koalas) {
+    console.log(koalas);
+    renderKoalas();
+  }).catch(function (err) {
+    console.log(err);
+    
+  })
 } // end getKoalas
+
+function renderKoalas() {
+  console.log('in render');
+  
+}
 
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
- 
+  
 }

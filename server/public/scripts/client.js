@@ -6,7 +6,6 @@ $( document ).ready( function(){
   setupClickListeners()
   // load existing koalas on page load
   getKoalas();
-
 }); // end doc ready
 
 function setupClickListeners() {
@@ -34,17 +33,32 @@ function getKoalas() {
     method: 'GET',
     url: '/koalas'
   }).then(function (koalas) {
-    console.log(koalas);
-    renderKoalas();
+    renderKoalas(koalas);
   }).catch(function (err) {
     console.log(err);
-    
   })
 } // end getKoalas
 
-function renderKoalas() {
-  console.log('in render');
-  
+function renderKoalas(listOfKoalas) {
+  console.log('in render', listOfKoalas);
+  $('#viewKoalas').empty();
+
+  for(let i = 0; i < listOfKoalas.length; i++) {
+    let koala = listOfKoalas[i];
+    $('#viewKoalas').append(`
+      <tr data-id=${koala.id}>
+        <td>${koala.name}</td>
+        <td>${koala.gender}</td>
+        <td>${koala.age}</td>
+        <td>${koala.ready_to_transfer}</td>
+        <td>${koala.notes}</td>
+        <td>
+          <button class="deleteBtn">DELETE Koala</button>
+          <button class="markReadyBtn">Ready to Transfer</button>
+        </td>
+      </tr>
+    `);
+  }
 }
 
 function saveKoala( newKoala ){

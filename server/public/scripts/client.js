@@ -38,3 +38,21 @@ function saveKoala( newKoala ){
   // ajax call to server to get koalas
  
 }
+function transferStatus() {
+  console.log('transferStatus button clicked');
+  let koala = $(this).closest('tr').data('koala')
+  let transfer = $(this).text();
+  console.log('clicked transfer status',koala.id,transfer);
+  $.ajax({
+    url: `/koalas/${koala.id}`,
+    method: 'PUT',
+    data: {transfer: transfer}
+  }).then(function (response) {
+    console.log('has been transfered!');
+    renderKoalas();
+  }).catch(function (err) {
+    console.log(err)
+  })
+}
+//need to add click listener to run this function :
+// $(#viewKoalas).on('click),***fillin***, transferStatus

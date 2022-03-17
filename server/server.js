@@ -16,3 +16,5 @@ app.use('/koalas', koalaRouter)
 app.listen(PORT, () => {
   console.log('listening on port', PORT);
 });
+
+koalaRouter.put('/:id', ())

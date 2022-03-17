@@ -24,6 +24,7 @@ function setupClickListeners() {
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
+  $( 'body' ).on( 'click','.markReadyBtn',transferStatus);
 }
 
 function getKoalas() {
@@ -68,19 +69,19 @@ function saveKoala( newKoala ){
 }
 function transferStatus() {
   console.log('transferStatus button clicked');
-  let koala = $(this).closest('tr').data('koala')
+  let koalaId = $(this).closest('tr').data('id')
   
-  console.log('clicked transfer status',);
-  // $.ajax({
-  //   url: `/koalas/${koala.id}`,
-  //   method: 'PUT',
+  console.log('clicked transfer status',koalaId);
+  $.ajax({
+    url: `/koalas/${koalaId}`,
+    method: 'PUT',
   
-  // }).then(function (response) {
-  //   console.log('has been transfered!');
-  //   getKoalas();
-  // }).catch(function (err) {
-  //   console.log(err)
-  // })
+  }).then(function (response) {
+    console.log('has been transferred!');
+    getKoalas();
+  }).catch(function (err) {
+    console.log(err)
+  })
 }
 //need to add click listener to run this function :
 // $(#viewKoalas).on('click),***fillin***, transferStatus

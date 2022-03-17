@@ -24,11 +24,18 @@ koalaRouter.get('/', (req, res) => {
 // POST
 
 
-// PUT
-// koalaRouter.put('/:id', (req, res)=>{
+//PUT
+
+
+koalaRouter.put('/:id', (req, res) => {
+    console.log(req.params.id);
     
-// })
-// DELETE
+    
+    
+    res.sendStatus(200);
+    
+})
+//DELETE
 
 
 module.exports = koalaRouter;

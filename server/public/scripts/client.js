@@ -16,16 +16,18 @@ function setupClickListeners() {
     let name = $('#nameIn').val();
     let age = $('#ageIn').val();
     let gender = $('#genderIn').val();
-    let readyForTransfer = $('#readyForTransferIn').val();
+    let ready_to_transfer = $('#readyForTransferIn').val();
     let notes = $('#notesIn').val();
+
 
     let koalaToSend = {
       name: name,
       age: age,
       gender: gender,
-      readyForTransfer: readyForTransfer,
-      notes: notes,
+      ready_to_transfer: ready_to_transfer,
+      notes: notes
     };
+    console.log(koalaToSend)
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
@@ -46,7 +48,7 @@ function saveKoala( newKoala ){
     data: newKoala
   }).then(function(response) {
     console.log(response);
-    getKoalas();
+    // getKoalas();
   }).catch(function(error) {
     console.log('error in client post:', error);
     alert('Sorry, dude. Error in post');

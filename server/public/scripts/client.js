@@ -19,12 +19,14 @@ function setupClickListeners() {
       name: 'testName',
       age: 'testName',
       gender: 'testName',
-      readyForTransfer: 'testName',
+      ready_for_transfer: 'testName',
       notes: 'testName',
     };
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
+  // click-listener for the delete button ot call function
+  $('body').on('click', '.deleteBtn', deleteKoala);
 }
 
 function getKoalas(){
@@ -41,6 +43,7 @@ function saveKoala( newKoala ){
 
 function deleteKoala( removedKoala ){
   console.log('in deleteKoala', removedKoala);
+  // target the ID of the koala on the table row
   let id = $(this).closest('tr').data('id');
   console.log(id);
 
@@ -49,7 +52,7 @@ function deleteKoala( removedKoala ){
       method: 'DELETE',
     }).then(function (response) {
       console.log('koala deleted');
-      renderKoalas();
+      getKoalas();
     }).catch(function(err) {
       console.log(err);
     }) 

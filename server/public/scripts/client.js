@@ -99,7 +99,7 @@ function saveKoala( newKoala ){
     data: newKoala
   }).then(function(response) {
     console.log(response);
-    // getKoalas();
+     getKoalas(response);
   }).catch(function(error) {
     console.log('error in client post:', error);
     alert('Sorry, dude. Error in post');

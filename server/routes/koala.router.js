@@ -14,7 +14,7 @@ koalaRouter.get('/', (req, res) => {
 
     pool.query(queryText).then(koalas => {
         res.send(koalas.rows);
-    }). catch(error => {
+    }).catch(error => {
         console.log('Error getting koalas', error);
         res.sendStatus(500);
     })
@@ -29,12 +29,23 @@ koalaRouter.get('/', (req, res) => {
 
 koalaRouter.put('/:id', (req, res) => {
     console.log(req.params.id);
+    let queryText = `
+    UPDATE "koalas"
+    SET "ready_to_transfer" = TRUE
+    WHERE "id" = $1;
     
-    
-    
-    res.sendStatus(200);
-    
-})
+    `;
+
+    const values = [req.params.id];
+    pool.query(queryText, values)
+        .then(result => {
+            res.sendStatus(200);
+        }).catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
 //DELETE
 
 

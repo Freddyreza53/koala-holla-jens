@@ -6,6 +6,7 @@
     <script src="vendors/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script src="scripts/client.js" charset="utf-8"></script>
     <link rel="stylesheet" href="style/style.css">
+
   </head>
   <body>
     <header>
@@ -22,6 +23,7 @@
       <input type="text" id="readyForTransferIn" value="" placeholder="Transfer: yes or no">
       <input type="text" id="notesIn" value="" placeholder="Notes">
       <button type="button" id="addButton">Add Koala</button>
+      <!-- <button class="deleteBtn">DELETE</button> -->
     </section>
     <section>
       <h2>All Koalas</h2>
@@ -31,11 +33,14 @@
             <th>Name</th>
             <th>Age</th>
             <th>Gender</th>
-            <th>Ready for Transfer</th>
+            <th>Ready to Transfer</th>
             <th>Notes</th>
           </tr>
         </thead>
         <tbody id="viewKoalas">
+          <tr>
+            <button class="markReadyBtn">transfer</button>
+          </tr>
         </tbody>
       </table>
     </section>

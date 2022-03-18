@@ -46,7 +46,8 @@ function renderKoalas(listOfKoalas) {
   for(let i = 0; i < listOfKoalas.length; i++) {
     let koala = listOfKoalas[i];
     
-    if (koala.ready_to_transfer === 'true') {
+    
+    if (koala.ready_to_transfer === true) {
       $('#viewKoalas').append(`
       <tr data-id=${koala.id}>
         <td>${koala.name}</td>
@@ -59,7 +60,8 @@ function renderKoalas(listOfKoalas) {
         </td>
       </tr>
     `);
-    } else {
+    } 
+    else {
     $('#viewKoalas').append(`
       <tr data-id=${koala.id}>
         <td>${koala.name}</td>
@@ -73,11 +75,12 @@ function renderKoalas(listOfKoalas) {
         </td>
       </tr>
     `);
+    }
   }
 }
 
-function saveKoala( newKoala ){
-  console.log( 'in saveKoala', newKoala );
-  // ajax call to server to get koalas
+// function saveKoala( newKoala ){
+//   console.log( 'in saveKoala', newKoala );
+//   // ajax call to server to get koalas
   
-}
+// }

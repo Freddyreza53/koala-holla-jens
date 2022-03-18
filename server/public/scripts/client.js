@@ -53,6 +53,23 @@ function renderKoalas(listOfKoalas) {
 
   for(let i = 0; i < listOfKoalas.length; i++) {
     let koala = listOfKoalas[i];
+    
+    
+    if (koala.ready_to_transfer === true) {
+      $('#viewKoalas').append(`
+      <tr data-id=${koala.id}>
+        <td>${koala.name}</td>
+        <td>${koala.gender}</td>
+        <td>${koala.age}</td>
+        <td>${koala.ready_to_transfer}</td>
+        <td>${koala.notes}</td>
+        <td>
+          <button class="deleteBtn">DELETE Koala</button>
+        </td>
+      </tr>
+    `);
+    } 
+    else {
     $('#viewKoalas').append(`
       <tr data-id=${koala.id}>
         <td>${koala.name}</td>
@@ -66,8 +83,10 @@ function renderKoalas(listOfKoalas) {
         </td>
       </tr>
     `);
+    }
   }
 }
+
 
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );

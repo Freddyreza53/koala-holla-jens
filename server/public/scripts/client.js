@@ -27,7 +27,7 @@ function setupClickListeners() {
       notes: notes
     };
     console.log(koalaToSend)
-    // call saveKoala with the new obejct
+    // call saveKoala with the new object
     saveKoala( koalaToSend );
   }); 
   $( 'body' ).on( 'click','.markReadyBtn',transferStatus);
@@ -62,7 +62,7 @@ function renderKoalas(listOfKoalas) {
         <td>${koala.name}</td>
         <td>${koala.gender}</td>
         <td>${koala.age}</td>
-        <td>${koala.ready_to_transfer}</td>
+        <td class="green">${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
         <td>
           <button class="deleteBtn">DELETE Koala</button>
@@ -76,7 +76,7 @@ function renderKoalas(listOfKoalas) {
         <td>${koala.name}</td>
         <td>${koala.gender}</td>
         <td>${koala.age}</td>
-        <td>${koala.ready_to_transfer}</td>
+        <td class="red" >${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
         <td>
           <button class="deleteBtn">DELETE Koala</button>
@@ -99,7 +99,7 @@ function saveKoala( newKoala ){
     data: newKoala
   }).then(function(response) {
     console.log(response);
-     getKoalas(response);
+    getKoalas(response);
   }).catch(function(error) {
     console.log('error in client post:', error);
     alert('Sorry, dude. Error in post');

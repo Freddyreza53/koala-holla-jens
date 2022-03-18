@@ -12,18 +12,26 @@ function setupClickListeners() {
   $( '#addButton' ).on( 'click', function(){
     console.log( 'in addButton on click' );
     // get user input and put in an object
-    // NOT WORKING YET :(
-    // using a test object
+    let name = $('#nameIn').val();
+    let age = $('#ageIn').val();
+    let gender = $('#genderIn').val();
+    let ready_to_transfer = $('#readyForTransferIn').val();
+    let notes = $('#notesIn').val();
+
+
     let koalaToSend = {
-      name: 'testName',
-      age: 'testName',
-      gender: 'testName',
-      ready_to_transfer: 'testName',
-      notes: 'testName',
+      name: name,
+      age: age,
+      gender: gender,
+      ready_to_transfer: ready_to_transfer,
+      notes: notes
     };
+    console.log(koalaToSend)
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
+  // click-listener for the delete button ot call function
+  $('body').on('click', '.deleteBtn', deleteKoala);
 }
 
 function getKoalas() {
@@ -79,8 +87,37 @@ function renderKoalas(listOfKoalas) {
   }
 }
 
-// function saveKoala( newKoala ){
-//   console.log( 'in saveKoala', newKoala );
-//   // ajax call to server to get koalas
-  
-// }
+
+function saveKoala( newKoala ){
+  console.log( 'in saveKoala', newKoala );
+  // ajax call to server to get koalas
+
+  $.ajax({
+    url: '/koalas',
+    method: 'POST',
+    data: newKoala
+  }).then(function(response) {
+    console.log(response);
+    // getKoalas();
+  }).catch(function(error) {
+    console.log('error in client post:', error);
+    alert('Sorry, dude. Error in post');
+  })
+}
+
+function deleteKoala( removedKoala ){
+  console.log('in deleteKoala', removedKoala);
+  // target the ID of the koala on the table row
+  let id = $(this).closest('tr').data('id');
+  console.log(id);
+
+    $.ajax({
+      url: `/koalas/${id}`,
+      method: 'DELETE',
+    }).then(function (response) {
+      console.log('koala deleted');
+      getKoalas();
+    }).catch(function(err) {
+      console.log(err);
+    }) 
+  }

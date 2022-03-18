@@ -30,6 +30,7 @@ function setupClickListeners() {
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
+  $( 'body' ).on( 'click','.markReadyBtn',transferStatus);
   // click-listener for the delete button ot call function
   $('body').on('click', '.deleteBtn', deleteKoala);
 }
@@ -98,12 +99,29 @@ function saveKoala( newKoala ){
     data: newKoala
   }).then(function(response) {
     console.log(response);
-    // getKoalas();
+     getKoalas(response);
   }).catch(function(error) {
     console.log('error in client post:', error);
     alert('Sorry, dude. Error in post');
   })
 }
+function transferStatus() {
+  console.log('transferStatus button clicked');
+  let koalaId = $(this).closest('tr').data('id')
+  
+  console.log('clicked transfer status',koalaId);
+  $.ajax({
+    url: `/koalas/${koalaId}`,
+    method: 'PUT',
+  
+  }).then(function (response) {
+    console.log('has been transferred!');
+    getKoalas();
+  }).catch(function (err) {
+    console.log(err)
+  })
+}
+
 
 function deleteKoala( removedKoala ){
   console.log('in deleteKoala', removedKoala);

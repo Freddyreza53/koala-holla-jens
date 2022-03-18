@@ -12,19 +12,27 @@ function setupClickListeners() {
   $( '#addButton' ).on( 'click', function(){
     console.log( 'in addButton on click' );
     // get user input and put in an object
-    // NOT WORKING YET :(
-    // using a test object
+    let name = $('#nameIn').val();
+    let age = $('#ageIn').val();
+    let gender = $('#genderIn').val();
+    let ready_to_transfer = $('#readyForTransferIn').val();
+    let notes = $('#notesIn').val();
+
+
     let koalaToSend = {
-      name: 'testName',
-      age: 'testName',
-      gender: 'testName',
-      ready_to_transfer: 'testName',
-      notes: 'testName',
+      name: name,
+      age: age,
+      gender: gender,
+      ready_to_transfer: ready_to_transfer,
+      notes: notes
     };
+    console.log(koalaToSend)
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
   $( 'body' ).on( 'click','.markReadyBtn',transferStatus);
+  // click-listener for the delete button ot call function
+  $('body').on('click', '.deleteBtn', deleteKoala);
 }
 
 function getKoalas() {
@@ -46,6 +54,23 @@ function renderKoalas(listOfKoalas) {
 
   for(let i = 0; i < listOfKoalas.length; i++) {
     let koala = listOfKoalas[i];
+    
+    
+    if (koala.ready_to_transfer === true) {
+      $('#viewKoalas').append(`
+      <tr data-id=${koala.id}>
+        <td>${koala.name}</td>
+        <td>${koala.gender}</td>
+        <td>${koala.age}</td>
+        <td>${koala.ready_to_transfer}</td>
+        <td>${koala.notes}</td>
+        <td>
+          <button class="deleteBtn">DELETE Koala</button>
+        </td>
+      </tr>
+    `);
+    } 
+    else {
     $('#viewKoalas').append(`
       <tr data-id=${koala.id}>
         <td>${koala.name}</td>
@@ -59,13 +84,26 @@ function renderKoalas(listOfKoalas) {
         </td>
       </tr>
     `);
+    }
   }
 }
+
 
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
-  
+
+  $.ajax({
+    url: '/koalas',
+    method: 'POST',
+    data: newKoala
+  }).then(function(response) {
+    console.log(response);
+    // getKoalas();
+  }).catch(function(error) {
+    console.log('error in client post:', error);
+    alert('Sorry, dude. Error in post');
+  })
 }
 function transferStatus() {
   console.log('transferStatus button clicked');
@@ -83,5 +121,21 @@ function transferStatus() {
     console.log(err)
   })
 }
-//need to add click listener to run this function :
-// $(#viewKoalas).on('click),***fillin***, transferStatus
+
+
+function deleteKoala( removedKoala ){
+  console.log('in deleteKoala', removedKoala);
+  // target the ID of the koala on the table row
+  let id = $(this).closest('tr').data('id');
+  console.log(id);
+
+    $.ajax({
+      url: `/koalas/${id}`,
+      method: 'DELETE',
+    }).then(function (response) {
+      console.log('koala deleted');
+      getKoalas();
+    }).catch(function(err) {
+      console.log(err);
+    }) 
+  }

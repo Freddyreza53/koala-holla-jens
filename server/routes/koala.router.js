@@ -22,10 +22,40 @@ koalaRouter.get('/', (req, res) => {
 })
 
 // POST
+koalaRouter.post('/', (req, res) => {
+    let newKoala = req.body
+    console.log('Adding', newKoala);
+    newKoala.age = Number(newKoala.age);
+
+    // convert readyForTransfer to ready_to_transfer
+    if(newKoala.ready_to_transfer.toLowerCase() === 'yes') {
+        newKoala.ready_to_transfer = true;
+      } else if(newKoala.ready_to_transfer.toLowerCase() === 'no') {
+        newKoala.ready_to_transfer = false;
+      } else {
+        alert('Please say yes or no for ready to transfer <3')
+      }
+
+    let queryText = `
+    INSERT INTO "koalas"
+    ("name", "gender", "age", "ready_to_transfer", "notes")
+    VALUES ($1, $2, $3, $4, $5);
+    `;
+
+    let values = [newKoala.name, newKoala.gender, newKoala.age, newKoala.ready_to_transfer, newKoala.notes]
+    
+    pool.query(queryText, values)
+    .then(result => {
+        res.sendStatus(201);
+      })
+      .catch(error => {
+        console.log(`Error adding new koala`, error);
+        res.sendStatus(500);
+      });
+})
 
 
 //PUT
-
 
 koalaRouter.put('/:id', (req, res) => {
     console.log(req.params.id);
@@ -47,6 +77,27 @@ koalaRouter.put('/:id', (req, res) => {
 });
 
 //DELETE
+
+koalaRouter.delete('/:id', (req, res) => {
+    console.log('delete a koala', req.params.id);
+    let id = req.params.id;
+    const queryText = `
+    DELETE FROM "koalas"
+    WHERE "id" = $1;
+    `;
+
+    const values = [id];
+
+    pool.query(queryText,values)
+    .then(result => {
+        res.sendStatus(204);
+    }).catch(err => {
+        console.log(err);
+        res.sendStatus(500);
+    })
+});
+
+
 
 
 module.exports = koalaRouter;

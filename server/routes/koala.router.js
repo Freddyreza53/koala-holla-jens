@@ -30,11 +30,11 @@ koalaRouter.post('/', (req, res) => {
     // convert readyForTransfer to ready_to_transfer
     if(newKoala.ready_to_transfer.toLowerCase() === 'yes') {
         newKoala.ready_to_transfer = true;
-      } else if(newKoala.ready_to_transfer.toLowerCase() === 'no') {
+    } else if(newKoala.ready_to_transfer.toLowerCase() === 'no') {
         newKoala.ready_to_transfer = false;
-      } else {
+    } else {
         alert('Please say yes or no for ready to transfer <3')
-      }
+    }
 
     let queryText = `
     INSERT INTO "koalas"
@@ -47,11 +47,11 @@ koalaRouter.post('/', (req, res) => {
     pool.query(queryText, values)
     .then(result => {
         res.sendStatus(201);
-      })
-      .catch(error => {
+    })
+    .catch(error => {
         console.log(`Error adding new koala`, error);
         res.sendStatus(500);
-      });
+    });
 })
 
 
